@@ -29,7 +29,8 @@ data "aws_vpc" "default" {
 data "aws_subnets" "public" {
   filter {
     name       = "vpc-id"
-    subnet_ids = ["subnet-20357001", "subnet-9b9897d6"] # Specify the correct subnet IDs here
+    values = [data.aws_vpc.default.id]
+    # Specify the correct subnet IDs here
 
   }
 }
