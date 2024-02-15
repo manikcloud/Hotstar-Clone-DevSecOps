@@ -28,8 +28,9 @@ data "aws_vpc" "default" {
 #get public subnets for cluster
 data "aws_subnets" "public" {
   filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.default.id]
+    name       = "vpc-id"
+    subnet_ids = ["subnet-20357001", "subnet-9b9897d6"] # Specify the correct subnet IDs here
+
   }
 }
 #cluster provision
@@ -83,8 +84,7 @@ resource "aws_eks_node_group" "example" {
   cluster_name    = aws_eks_cluster.example.name
   node_group_name = "Node-cloud"
   node_role_arn   = aws_iam_role.example1.arn
-  subnet_ids      = data.aws_subnets.public.ids
-
+  subnet_ids      = ["subnet-20357001", "subnet-9b9897d6"]
   scaling_config {
     desired_size = 1
     max_size     = 2
